@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.CoustomerDetails;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CustomerManagementFormController implements Initializable {
@@ -82,7 +83,7 @@ public class CustomerManagementFormController implements Initializable {
     public TableColumn<?, ?> tblCustomerID;
 
     @FXML
-    void btnAddCustomerOnAction(ActionEvent event) {
+    void btnAddCustomerOnAction(ActionEvent event) throws SQLException {
         CoustomerDetails details = new CoustomerDetails(
                 txtcustomerID.getText(),
                 customerTitle.getValue(),
@@ -166,6 +167,20 @@ public class CustomerManagementFormController implements Initializable {
         tblCustomerPsotalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
 
         loadCoustomerDetails();
+
+        tblCoustomerDetalis.getSelectionModel().selectedItemProperty().addListener((observebleValue, oldvalue, newValue) -> {
+            if(newValue != null){
+                txtcustomerID.setText(newValue.getID());
+                customerTitle.setValue(newValue.getTitle());
+                customerName.setText(newValue.getName());
+                customerDOB.setValue(newValue.getDOB());
+                customerSalary.setText(String.valueOf(newValue.getSalary()));
+                customerAddress.setText(newValue.getAddress());
+                customerCity.setText(newValue.getCity());
+                customerProvince.setValue(newValue.getProvince());
+                customerPostalCode.setText(String.valueOf(newValue.getPostalCode()));
+            }
+        });
     }
 
     private void loadCoustomerDetails(){
@@ -173,4 +188,6 @@ public class CustomerManagementFormController implements Initializable {
         coustomerDetails = coustomerManagementService.getAllCoustomerDetails();
         tblCoustomerDetalis.setItems(coustomerDetails);
     }
+
+
 }
