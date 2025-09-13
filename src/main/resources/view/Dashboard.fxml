@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
-
+<AnchorPane prefHeight="516.0" prefWidth="764.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DashboardFormController">
+   <children>
+      <JFXButton contentDisplay="TOP" graphicTextGap="16.0" layoutX="104.0" layoutY="271.0" onAction="#btnCustomerMgtOnAction" prefHeight="156.0" prefWidth="123.0" style="-fx-background-color: #66747f;" text="Customer Management" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <graphic>
+            <FontIcon iconColor="#ffcd9c" iconLiteral="fas-address-book" iconSize="32" selectionStart="0" />
+         </graphic>
+      </JFXButton>
+      <JFXButton contentDisplay="TOP" graphicTextGap="16.0" layoutX="244.0" layoutY="271.0" onAction="#btnItemMgtOnAction" prefHeight="156.0" prefWidth="123.0" style="-fx-background-color: #66747f;" text="Item&#10;Management" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <graphic>
+            <FontIcon iconColor="#ffcd9c" iconLiteral="fas-box-open" iconSize="32" selectionStart="0" text="" />
+         </graphic>
+      </JFXButton>
+      <JFXButton contentDisplay="TOP" graphicTextGap="16.0" layoutX="382.0" layoutY="271.0" onAction="#btnOrderMgtOnAction" prefHeight="156.0" prefWidth="123.0" style="-fx-background-color: #66747f;" text="Order&#10;Management" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <graphic>
+            <FontIcon iconColor="#ffcd9c" iconLiteral="fas-shopping-cart" iconSize="32" selectionStart="0" />
+         </graphic>
+      </JFXButton>
+      <JFXButton contentDisplay="TOP" graphicTextGap="16.0" layoutX="522.0" layoutY="271.0" onAction="#btnOrderDetailMgtOnAction" prefHeight="156.0" prefWidth="123.0" style="-fx-background-color: #66747f;" text="Order Detail Management" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <graphic>
+            <FontIcon iconColor="#ffcd9c" iconLiteral="fas-clipboard-list" iconSize="32" selectionStart="0" />
+         </graphic>
+      </JFXButton>
+   </children>
 </AnchorPane>
