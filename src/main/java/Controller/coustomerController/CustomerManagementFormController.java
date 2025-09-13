@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.CoustomerDetails;
 
 import java.net.URL;
@@ -152,6 +153,18 @@ public class CustomerManagementFormController implements Initializable {
         );
         customerTitle.setItems(customerTitleTypes);
         customerProvince.setItems(ProvinceType);
+
+        //set table details
+        tblCustomerID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        tblCustomerTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        tblCustomerName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        tblCustomerDOB.setCellValueFactory(new PropertyValueFactory<>("DOB"));
+        tblCustomerSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
+        tblCustomerAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        tblCustomerCity.setCellValueFactory(new PropertyValueFactory<>("city"));
+        tblCustomerProvince.setCellValueFactory(new PropertyValueFactory<>("province"));
+        tblCustomerPsotalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+
         loadCoustomerDetails();
     }
 
