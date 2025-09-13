@@ -11,10 +11,11 @@ import java.io.IOException;
 public class DashboardFormController {
 
     Stage coustomerManagement = new Stage();
+    Stage itemManagement = new Stage();
 
     @FXML
     void btnCustomerMgtOnAction(ActionEvent event)  {
-        System.out.println("Coustomer management");
+
         try {
             coustomerManagement.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CustomerManagement.fxml"))));
         } catch (IOException e) {
@@ -26,8 +27,14 @@ public class DashboardFormController {
 
     @FXML
     void btnItemMgtOnAction(ActionEvent event) {
-        System.out.println("Item management");
 
+        try {
+            itemManagement.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ItemManagementForm.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        itemManagement.setResizable(false);
+        itemManagement.show();
     }
 
     @FXML
