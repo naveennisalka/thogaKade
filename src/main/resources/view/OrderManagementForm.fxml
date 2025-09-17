@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane prefHeight="802.0" prefWidth="1277.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.OrderController.OrderManagementFormController">
+<children>
+    <TableView fx:id="tblOrders" layoutX="413.0" layoutY="85.0" prefHeight="556.0" prefWidth="846.0">
+        <columns>
+            <TableColumn fx:id="colProductID" prefWidth="145.00003051757812" text="Product ID" />
+            <TableColumn fx:id="colDiscription" prefWidth="214.99996948242188" text="DISCRIPTION" />
+            <TableColumn fx:id="colPkgSize" prefWidth="124.33331298828125" text="PACKAGE SIZE" />
+            <TableColumn fx:id="colUnitPrize" prefWidth="114.6666259765625" text="UNIT PRICE" />
+            <TableColumn fx:id="colQTY" prefWidth="103.3333740234375" text="QUANTITY" />
+            <TableColumn fx:id="colPrice" prefWidth="140.0" text="PRICE" />
+        </columns>
+    </TableView>
+    <JFXButton graphicTextGap="20.0" layoutX="61.0" layoutY="581.0" onAction="#btnAddItemOnAction" prefHeight="42.0" prefWidth="246.0" style="-fx-background-color: #66747f;" text="ADD ITEM" textFill="WHITE">
+        <graphic>
+            <FontIcon iconColor="WHITE" iconLiteral="fas-cart-plus" iconSize="20" selectionFill="#06ff51" selectionStart="0" />
+        </graphic>
+    </JFXButton>
+    <JFXButton contentDisplay="TOP" graphicTextGap="8.0" layoutX="979.0" layoutY="658.0" onAction="#btnplaceOrderOnAction" prefHeight="120.0" prefWidth="279.0" style="-fx-background-color: #66747f;" text="PLACE ORDER" textFill="WHITE">
+        <graphic>
+            <FontIcon fill="#00ff22" iconColor="#00ff22" iconLiteral="fas-check" iconSize="40" />
+        </graphic>
+         <font>
+            <Font name="Poppins Bold" size="15.0" />
+         </font>
+    </JFXButton>
+    <JFXButton graphicTextGap="20.0" layoutX="60.0" layoutY="728.0" onAction="#btnViewHistoryOnAction" prefHeight="42.0" prefWidth="302.0" style="-fx-background-color: #66747f;" text="VIEW ORDER HISTORY" textAlignment="CENTER" textFill="WHITE">
+        <graphic>
+            <FontIcon iconColor="WHITE" iconLiteral="fas-undo" iconSize="16" />
+        </graphic>
+    </JFXButton>
+    <JFXButton layoutX="61.0" layoutY="647.0" onAction="#btnClearFormOnAction" prefHeight="36.0" prefWidth="302.0" style="-fx-background-color: #dddddd;" text="CLEAR">
+        <graphic>
+            <FontIcon />
+        </graphic>
+    </JFXButton>
+    <Label layoutX="60.0" layoutY="183.0" text="NAME" />
+    <JFXTextField fx:id="customerName" layoutX="60.0" layoutY="212.0" prefHeight="25.0" prefWidth="302.0" />
+    <Label layoutX="61.0" layoutY="281.0" text="ITEM CODE" />
+    <Label layoutX="60.0" layoutY="384.0" text="DISCRIPTION" />
+    <JFXTextField fx:id="txtItemDiscription" layoutX="60.0" layoutY="413.0" prefHeight="25.0" prefWidth="302.0" />
+    <JFXComboBox fx:id="dropDownItemID" layoutX="61.0" layoutY="318.0" prefHeight="25.0" prefWidth="302.0" visibleRowCount="5" />
+    <Label layoutX="61.0" layoutY="126.0" text="COUSTOMER ID  :">
+        <font>
+            <Font name="System Bold" size="12.0" />
+        </font>
+    </Label>
+      <JFXButton contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="315.0" layoutY="581.0" onAction="#btndeleteItemOnAction" prefHeight="42.0" prefWidth="49.0" style="-fx-background-color: eb284c;" text="hrllo" textAlignment="CENTER" textFill="WHITE" textOverrun="LEADING_ELLIPSIS">
+         <graphic>
+            <FontIcon iconColor="WHITE" iconLiteral="far-trash-alt" iconSize="24" nodeOrientation="RIGHT_TO_LEFT" selectionEnd="0" strokeLineCap="ROUND" strokeLineJoin="ROUND" tabSize="0" text="" textAlignment="JUSTIFY">
+               <font>
+                  <Font size="10.0" />
+               </font></FontIcon>
+         </graphic>
+      </JFXButton>
+      <JFXComboBox fx:id="dropDownCusID" editable="true" layoutX="179.0" layoutY="122.0" prefHeight="25.0" prefWidth="182.0" visibleRowCount="5" />
+      <Label fx:id="lblTotal" layoutX="739.0" layoutY="702.0" text="total">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="61.0" layoutY="461.0" text="QUANTITY" />
+      <JFXTextField fx:id="txtQTY" layoutX="61.0" layoutY="490.0" prefHeight="25.0" prefWidth="146.0" />
+      <Label layoutX="218.0" layoutY="460.0" text="DISCOUNT" />
+      <JFXTextField fx:id="txtDiscount" layoutX="218.0" layoutY="489.0" prefHeight="25.0" prefWidth="146.0" />
+      <Label layoutX="96.0" layoutY="77.0" text="ORDER ID  :">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txtOrderID" layoutX="178.0" layoutY="73.0" prefHeight="25.0" prefWidth="188.0" />
+</children>
+</AnchorPane>

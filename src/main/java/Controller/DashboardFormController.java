@@ -12,6 +12,7 @@ public class DashboardFormController {
 
     Stage coustomerManagement = new Stage();
     Stage itemManagement = new Stage();
+    Stage OrderManagement = new Stage();
 
     @FXML
     void btnCustomerMgtOnAction(ActionEvent event)  {
@@ -44,8 +45,12 @@ public class DashboardFormController {
 
     @FXML
     void btnOrderMgtOnAction(ActionEvent event) {
-        System.out.println("order management");
-
+        try {
+            OrderManagement.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/OrderManagementForm.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        OrderManagement.setResizable(false);
+        OrderManagement.show();
     }
-
 }
