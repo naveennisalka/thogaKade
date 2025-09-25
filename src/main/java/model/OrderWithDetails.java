@@ -1,17 +1,20 @@
 package model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import lombok.*;
+
+import java.time.LocalDate;
+
+@Data
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class OrderDetails {
+@ToString
+public class OrderWithDetails{
     private String orderID;
+    private LocalDate orderDate;
+    private String cutID;
     private String itemCode;
     private int orderQTY;
     private int discount;
