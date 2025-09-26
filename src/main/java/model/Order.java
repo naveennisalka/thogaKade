@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -20,12 +19,6 @@ public class Order {
     private LocalDate orderDate;
     private String customerID;
 
-
-    //private ArrayList<OrderDetails> details = new ArrayList<>();
-    //private ObservableList<OrderDetails> details = FXCollections.observableArrayList();
-
-
-    // Method to add detail: public void addDetail(OrderDetail detail) { details.add(detail); }
 }
 
 
