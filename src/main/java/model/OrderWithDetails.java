@@ -18,4 +18,6 @@ public class OrderWithDetails{
     private String itemCode;
     private int orderQTY;
     private int discount;
+
 }
+

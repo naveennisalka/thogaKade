@@ -19,6 +19,8 @@ public class Order {
     private String orderID;
     private LocalDate orderDate;
     private String customerID;
+
+
     //private ArrayList<OrderDetails> details = new ArrayList<>();
     //private ObservableList<OrderDetails> details = FXCollections.observableArrayList();
 

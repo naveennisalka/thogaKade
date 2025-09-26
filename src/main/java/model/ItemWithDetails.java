@@ -13,6 +13,4 @@ public class ItemWithDetails {
     private String Description;
     private String PackSize;
     private double UnitPrice;
-
-
 }

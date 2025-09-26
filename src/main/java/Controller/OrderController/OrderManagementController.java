@@ -6,43 +6,77 @@ import javafx.collections.ObservableList;
 import model.*;
 
 import java.beans.Introspector;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 
 public class OrderManagementController implements OrderManagementService{
     ObservableList<ItemDetails> itemDetails = FXCollections.observableArrayList();
 
-    @Override
-    public void addItemToOrder() {
 
+    public boolean isOrderIDExist(String orderID) {
+        String SQL = "SELECT 1 FROM orders WHERE OrderID = ? LIMIT 1";
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(SQL)) {
 
+            ps.setString(1, orderID);
+            ResultSet rs = ps.executeQuery();
+
+            return rs.next();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
-    public void placeOrder(Order order) {
-        String insertOrderSQL = "INSERT INTO orders (OrderID, OrderDate, CustID) VALUES (?, ?, ?)";
-        String insertOrderDetailSQL = "INSERT INTO orderdetail (OrderID, ItemCode, OrderQTY, Discount) VALUES (?, ?, ?, ?)";
+    public void placeOrder(ObservableList<TempItemDetails> addedItems, Order order,ObservableList<String> deletedItemsIDInOrder) {
+        String newOrderSQL = "INSERT INTO orders (OrderID, OrderDate, CustID) VALUES (?, ?, ?)";
+        String addItemToOrderSQL = "INSERT INTO orderdetail (OrderID, ItemCode, OrderQTY, Discount) VALUES (?, ?, ?, ?)";
+        String deleteItemFromOrder = "DELETE FROM orderdetail WHERE OrderID = ? AND ItemCode = ?";
+        String CheckOrder = "SELECT 1 FROM orders WHERE OrderID = ? LIMIT 1";
 
         try {
             Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement psOrder = connection.prepareStatement(insertOrderSQL);
-            PreparedStatement psOrderDetails = connection.prepareStatement(insertOrderDetailSQL);
 
-            psOrder.setString(1,order.getOrderID());
-            psOrder.setObject(2,order.getOrderDate());
-            psOrder.setString(3,order.getCustomerID());
-            psOrder.executeUpdate();
+            PreparedStatement psNewOrder = connection.prepareStatement(newOrderSQL);
+            PreparedStatement psAddItem = connection.prepareStatement(addItemToOrderSQL);
+            PreparedStatement psDltItem = connection.prepareStatement(deleteItemFromOrder);
+            PreparedStatement psCheckOrder = connection.prepareStatement(CheckOrder);
 
-//            for(OrderDetails details : order.getDetails()){
-//                psOrderDetails.setObject(1,details.getOrderID());
-//                psOrderDetails.setObject(2,details.getItemCode());
-//                psOrderDetails.setObject(3,details.getOrderQTY());
-//                psOrderDetails.setObject(4,details.getDiscount());
-//                psOrderDetails.executeUpdate();
-//            }
+            psCheckOrder.setString(1, order.getOrderID());
+            try (ResultSet rs = psCheckOrder.executeQuery()) {
+                boolean orderExists = rs.next();
+                if (!orderExists) {
+                    // Insert new order
+                    psNewOrder.setString(1, order.getOrderID());
+                    psNewOrder.setDate(2, Date.valueOf(order.getOrderDate()));
+                    psNewOrder.setString(3, order.getCustomerID());
+                    psNewOrder.executeUpdate();
+
+                }
+            }
+
+            if(addedItems != null){
+                for (TempItemDetails item : addedItems){
+                    psAddItem.setString(1,order.getOrderID());
+                    psAddItem.setString(2,item.getID());
+                    psAddItem.setInt(3,item.getQTY());
+                    psAddItem.setInt(4,item.getDiscount());
+                    psAddItem.executeUpdate();
+                }
+            }
+
+            if(deletedItemsIDInOrder != null){
+                for (String item : deletedItemsIDInOrder){
+                    psDltItem.setString(1,order.getOrderID());
+                    psDltItem.setString(2,item);
+                    psDltItem.executeUpdate();
+                }
+            }
+
+
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -53,15 +87,7 @@ public class OrderManagementController implements OrderManagementService{
 
     }
 
-    @Override
-    public void deleteOrder() {
 
-    }
-
-    @Override
-    public void updateOrder() {
-
-    }
 
     @Override
     public ObservableList<String> getAllCoustomerID() {
@@ -138,9 +164,6 @@ public class OrderManagementController implements OrderManagementService{
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                String Description;
-                String PackSize;
-                double UnitPrice;
 
                 String itemCode = resultSet.getString("ItemCode");
                 int OrderQTY = resultSet.getInt("OrderQTY");

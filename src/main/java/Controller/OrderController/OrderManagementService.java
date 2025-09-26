@@ -1,17 +1,11 @@
 package Controller.OrderController;
 
 import javafx.collections.ObservableList;
-import model.ItemDetails;
-import model.ItemWithDetails;
-import model.Order;
-import model.OrderWithDetails;
+import model.*;
 
 public interface OrderManagementService {
-    void addItemToOrder();
-    void placeOrder(Order order);
+    void placeOrder(ObservableList<TempItemDetails> addedItems, Order order,ObservableList<String> deletedItemsIDInOrder);
     void viewHistory();
-    void deleteOrder();
-    void updateOrder();
     ObservableList<String> getAllCoustomerID();
     ObservableList<String> getAllItemID();
     String getCoustomerName(String custID);
@@ -20,7 +14,4 @@ public interface OrderManagementService {
     ObservableList<OrderWithDetails> getOrderbyID(String orderID);
     ObservableList<ItemWithDetails> getOrderedItemDetails(String orderID);
     Order getOrderDetails(String OrderID);
-
-
-
 }

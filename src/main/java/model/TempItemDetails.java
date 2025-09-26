@@ -7,12 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-
-public class OrderDetails {
-    private String orderID;
-    private String itemCode;
-    private int orderQTY;
+@AllArgsConstructor
+public class TempItemDetails {
+    private String ID;
     private int discount;
+    private int QTY;
 }

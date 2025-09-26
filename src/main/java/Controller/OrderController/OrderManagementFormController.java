@@ -12,10 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.ItemDetails;
-import model.ItemWithDetails;
-import model.OrderDetails;
-import model.OrderWithDetails;
+import model.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,9 +21,10 @@ public class OrderManagementFormController implements Initializable {
 
 
     OrderManagementService orderManagementService = new OrderManagementController();
-    ObservableList<OrderDetails> orderDetails = FXCollections.observableArrayList();
     ObservableList<OrderWithDetails> orderWithDetails = FXCollections.observableArrayList();
-    ObservableList<ItemWithDetails> itemWithDetails = FXCollections.observableArrayList();;
+    ObservableList<ItemWithDetails> itemWithDetails = FXCollections.observableArrayList();
+    ObservableList<String> deletedItemsIDInOrder = FXCollections.observableArrayList();
+    ObservableList<TempItemDetails> AddedItemsIDInOrder = FXCollections.observableArrayList();
 
     @FXML
     private TableColumn<?, ?> colDiscription;
@@ -76,9 +74,29 @@ public class OrderManagementFormController implements Initializable {
     @FXML
     public DatePicker datepicker;
 
+
     @FXML
     void btnAddItemOnAction(ActionEvent event) {
+        AddedItemsIDInOrder.add(new TempItemDetails(
+                dropDownItemID.getValue(),
+                Integer.parseInt(txtDiscount.getText()),
+                Integer.parseInt(txtQTY.getText())
+        ));
 
+        itemWithDetails.add(new ItemWithDetails(
+                dropDownItemID.getValue(), Integer.parseInt(txtDiscount.getText()), Integer.parseInt(txtQTY.getText()),
+                txtItemDiscription.getText(),
+                orderManagementService.getItemDetails(dropDownItemID.getValue()).getPackSize(),
+                orderManagementService.getItemDetails(dropDownItemID.getValue()).getUnitPrice()
+        ));
+        System.out.println(AddedItemsIDInOrder);
+    }
+
+    @FXML
+    void btndeleteItemOnAction(ActionEvent event) {
+        deletedItemsIDInOrder.add(dropDownItemID.getValue());
+        itemWithDetails.removeIf(item -> dropDownItemID.getValue().equals(item.getItemCode()));
+        System.out.println(deletedItemsIDInOrder);
     }
 
     @FXML
@@ -100,13 +118,16 @@ public class OrderManagementFormController implements Initializable {
     }
 
     @FXML
-    void btndeleteItemOnAction(ActionEvent event) {
-
-    }
-
-    @FXML
     void btnplaceOrderOnAction(ActionEvent event) {
-
+        Order order = new Order(
+                txtOrderID.getText(),
+                datepicker.getValue(),
+                dropDownCusID.getValue()
+        );
+        orderManagementService.placeOrder(AddedItemsIDInOrder,order,deletedItemsIDInOrder);
+        AddedItemsIDInOrder.clear();
+        deletedItemsIDInOrder.clear();
+        btnClearFormOnAction(event);
     }
 
     private void loadItemDetails(String orderID){
@@ -122,23 +143,7 @@ public class OrderManagementFormController implements Initializable {
         dropDownCusID.setItems(custID);
         dropDownItemID.setItems(ItemID);
 
-
         txtOrderID.setText(orderManagementService.getOrderID());
-
-//
-//        colItemID.setCellValueFactory(new PropertyValueFactory<>("ID"));
-//        colItemDiscription.setCellValueFactory(new PropertyValueFactory<>("Description"));
-//        colSize.setCellValueFactory(new PropertyValueFactory<>("PackSize"));
-//        colPrice.setCellValueFactory(new PropertyValueFactory<>("UnitPrice"));
-//        colQTY.setCellValueFactory(new PropertyValueFactory<>("QTY"));
-//        loadItemDetails();
-//
-//        private String orderID;
-//        private LocalDate orderDate;
-//        private String cutID;
-//        private String itemCode;
-//        private int orderQTY;
-//        private int discount;
 
         colProductID.setCellValueFactory(new PropertyValueFactory<>("itemCode"));
         colDiscription.setCellValueFactory(new PropertyValueFactory<>("Description"));
@@ -149,10 +154,6 @@ public class OrderManagementFormController implements Initializable {
 
         loadItemDetails(txtOrderID.getText());
 
-
-//
-
-
         dropDownCusID.getSelectionModel().selectedItemProperty().addListener((observableValue, details, newValue) -> {
             if(newValue != null){
                 customerName.setText(orderManagementService.getCoustomerName(dropDownCusID.getValue()));
@@ -160,8 +161,6 @@ public class OrderManagementFormController implements Initializable {
         });
 
         txtOrderID.textProperty().addListener((observable, oldValue, newValue) -> {
-//            colProductID.setCellValueFactory(new PropertyValueFactory<>("orderID"));
-//            colDiscription.setCellValueFactory(new PropertyValueFactory<>(""));
               loadItemDetails(txtOrderID.getText());
             if(orderManagementService.getOrderDetails(txtOrderID.getText()) != null){
                 dropDownCusID.setValue(orderManagementService.getOrderDetails(txtOrderID.getText()).getCustomerID());
@@ -184,10 +183,5 @@ public class OrderManagementFormController implements Initializable {
                 dropDownItemID.setValue(newValue.getItemCode());
             }
         });
-
-
-
-
-
     }
 }
